@@ -30,22 +30,18 @@ int main() {
         read(input);
 
         switch (input) {
-            case 1:
+            case 1: // print
                 println(matrix);
                 break;
-            case 2:
-                //
+            case 2: // randomize
                 break;
-            case 3:
-                //
+            case 3: // multiply with a number
                 break;
-            case 4:
-                //
+            case 4: // add a matrix
                 break;
-            case 5:
-                //
+            case 5: // multiply with a matrix
                 break;
-            case 0:
+            case 0: // exit
                 stoploop = true;
                 break;
         }
