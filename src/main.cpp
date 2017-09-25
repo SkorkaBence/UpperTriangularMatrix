@@ -11,10 +11,10 @@ int main() {
     bool stoploop = false;
 
     println("Hello!");
-    print("Mekkora legyen a matrix? /Nem ellenorzott input/ ");
+    print("Matrix merete: ");
     read(matrix_size);
 
-    UpperTriangularMatrix matrix(matrix_size);
+    sbl::UpperTriangularMatrix matrix(matrix_size);
     println("Matrix letrehozva!");
 
     while (!stoploop) {
@@ -36,6 +36,10 @@ int main() {
             case 2: // randomize
                 break;
             case 3: // multiply with a number
+                int num;
+                print("Szorzas ennyivel: ");
+                read(num);
+                matrix *= num;
                 break;
             case 4: // add a matrix
                 break;
