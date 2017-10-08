@@ -1,19 +1,23 @@
-#ifndef H_MATRIXEXCEPTION
-#define H_MATRIXEXCEPTION
+#ifndef H_SBL_MATRIXEXCEPTION
+#define H_SBL_MATRIXEXCEPTION
 
 #include <iostream>
 #include <string>
+#include <exception>
 
 namespace sbl {
-    class MatrixException {
+    class MatrixException : public std::exception {
     private:
     	std::string message;
     public:
     	MatrixException(std::string msg);
     	std::string getMessage() const;
     	friend std::ostream& operator << (std::ostream& out, MatrixException ex);
+        const char * what () const throw () {
+            return "MatrixException";
+        }
     };
 }
 
 
-#endif // !H_MATRIXEXCEPTION
+#endif // !H_SBL_MATRIXEXCEPTION

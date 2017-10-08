@@ -1,8 +1,9 @@
-#ifndef  H_UPPERTRIANGULARMATRIX
-#define H_UPPERTRIANGULARMATRIX
+#ifndef  H_SBL_UPPERTRIANGULARMATRIX
+#define H_SBL_UPPERTRIANGULARMATRIX
 
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include "Matrix/MatrixException.h"
 #include "Storage/Vector.h"
 
@@ -24,16 +25,21 @@ namespace sbl {
     	~UpperTriangularMatrix();
 
     	int& operator () (unsigned int x, unsigned int y);
-    	bool operator += (const UpperTriangularMatrix& addthis);
+        const int& operator () (unsigned int x, unsigned int y) const;
+    	UpperTriangularMatrix& operator += (const UpperTriangularMatrix& addthis);
     	UpperTriangularMatrix operator + (const UpperTriangularMatrix& addthis) const;
-    	bool operator *= (const number_type& mult);
+    	UpperTriangularMatrix& operator *= (const number_type& mult);
     	UpperTriangularMatrix operator * (const number_type& mult) const;
-    	bool operator = (const UpperTriangularMatrix& clone);
+    	UpperTriangularMatrix& operator = (const UpperTriangularMatrix& clone);
+        UpperTriangularMatrix operator * (const UpperTriangularMatrix& mult) const;
+
+        bool writeData(std::ostream& out) const;
+        bool readData(std::istream& in);
+        int getSize() const;
 
     	friend std::ostream& operator << (std::ostream& out, const UpperTriangularMatrix& mx);
     };
 
 }
 
-
-#endif // ! H_UPPERTRIANGULARMATRIX
+#endif // ! H_SBL_UPPERTRIANGULARMATRIX

@@ -1,7 +1,8 @@
 #include "Matrix/UpperTriangularMatrix.h"
+#include <string>
 
 namespace sbl {
-    
+
     UpperTriangularMatrix::UpperTriangularMatrix(int s) : size(s) {
     	data.resize(this->calculateVectorLength());
     	for (int i = 0; i < data.size(); i++) {
@@ -25,7 +26,7 @@ namespace sbl {
     	if (x < y || x < 0 || y < 0 || x >= size || y >= size) {
     		return -1;
     	} else {
-    		return x - y + (size + size - y + 1) * (y) / 2;
+            return x - y + (((2 * size - y + 1.0) * y) / 2);
     	}
     }
 
@@ -38,10 +39,19 @@ namespace sbl {
     	}
     }
 
+    const int& UpperTriangularMatrix::operator() (unsigned int x, unsigned int y) const {
+    	int index = this->calculateVectorPosition(x, y);
+    	if (index >= 0 && index < data.size()) {
+    		return this->data[index];
+    	} else {
+    		throw MatrixException("Invalid positions");
+    	}
+    }
+
     int numDigits(int number) {
     	int digits = 0;
+        if (number == 0) return 1;
     	if (number < 0) number *= -1;
-    	if (number == 0) return 1;
     	while (number) {
     		number /= 10;
     		digits++;
@@ -83,7 +93,25 @@ namespace sbl {
     	return out;
     }
 
-    bool UpperTriangularMatrix::operator += (const UpperTriangularMatrix& addthis) {
+    bool UpperTriangularMatrix::writeData(std::ostream& out) const {
+        out << size;
+        for (int i = 0; i < data.size(); i++) {
+            out << " " << data[i];
+        }
+        return true;
+    }
+
+    bool UpperTriangularMatrix::readData(std::istream& in) {
+        in >> size;
+    	data.resize(calculateVectorLength());
+        //std::cerr << "Matrix size: " << size << " Vector size: " << data.size() << std::endl;
+    	for (int i = 0; i < data.size(); i++) {
+    		in >> data[i];
+    	}
+    	return true;
+    }
+
+    UpperTriangularMatrix& UpperTriangularMatrix::operator += (const UpperTriangularMatrix& addthis) {
     	if (this->size != addthis.size) {
     		throw MatrixException("Incompatible sizes");
     	}
@@ -91,7 +119,7 @@ namespace sbl {
     	for (int i = 0; i < this->data.size(); i++) {
     		this->data[i] += addthis.data[i];
     	}
-    	return true;
+    	return *this;
     }
 
     UpperTriangularMatrix UpperTriangularMatrix::operator + (const UpperTriangularMatrix& addthis) const {
@@ -100,11 +128,11 @@ namespace sbl {
     	return nw;
     }
 
-    bool UpperTriangularMatrix::operator *= (const number_type& mult) {
+    UpperTriangularMatrix& UpperTriangularMatrix::operator *= (const number_type& mult) {
     	for (int i = 0; i < this->data.size(); i++) {
     		this->data[i] *= mult;
     	}
-    	return true;
+    	return *this;
     }
     UpperTriangularMatrix UpperTriangularMatrix::operator * (const number_type& mult) const {
     	UpperTriangularMatrix nw(*this);
@@ -112,9 +140,9 @@ namespace sbl {
     	return nw;
     }
 
-    bool UpperTriangularMatrix::operator = (const UpperTriangularMatrix& clone) {
+    UpperTriangularMatrix& UpperTriangularMatrix::operator = (const UpperTriangularMatrix& clone) {
     	copyFrom(clone);
-    	return true;
+    	return *this;
     }
 
     void UpperTriangularMatrix::copyFrom(const UpperTriangularMatrix& copy) {
@@ -123,6 +151,37 @@ namespace sbl {
     	for (int i = 0; i < copy.data.size(); i++) {
     		data[i] = copy.data[i];
     	}
+    }
+
+    UpperTriangularMatrix UpperTriangularMatrix::operator * (const UpperTriangularMatrix& mult) const {
+        UpperTriangularMatrix nw(size);
+
+        for (unsigned int x = 0; x < size; x++) {
+            for (unsigned int y = 0; y <= x; y++) {
+                int index = calculateVectorPosition(x, y);
+                if (index >= 0) {
+                    //std::cerr << "POS: " << x << " " << y << std::endl;
+                    int val = 0;
+                    int min = (x > y ? y : x);
+                    int max = (x > y ? x : y);
+                    for (unsigned int t = min; t <= max; t++) {
+                        int index1 = calculateVectorPosition(x, t);
+                        int index2 = calculateVectorPosition(t, y);
+                        //std::cerr << x << " " << t << " " << index1 << " " << t << " " << y << " " << index2 << std::endl;
+                        if (index1 >= 0 && index2 >= 0) {
+                            val += this->data[index2] * mult.data[index1];
+                        }
+                    }
+                    nw.data[index] = val;
+                }
+            }
+        }
+
+        return nw;
+    }
+
+    int UpperTriangularMatrix::getSize() const {
+        return size;
     }
 
 }

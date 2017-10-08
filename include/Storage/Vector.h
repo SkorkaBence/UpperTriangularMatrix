@@ -1,5 +1,5 @@
-#ifndef H_VECTOR
-#define H_VECTOR
+#ifndef H_SBL_VECTOR
+#define H_SBL_VECTOR
 
 #include <iostream>
 #include "Storage/VectorException.h"
@@ -63,14 +63,17 @@ namespace sbl {
         }
 
         bool resize(unsigned int ns) {
-            if (ns <= reserved_size) {
-                return true;
-            } else {
-                reserved_size = ns;
-                real_size = ns;
-                deleteArray();
-                arr = new T[reserved_size];
+            int minimumsize = ns > real_size ? real_size : ns;
+
+            T* newarr = new T[ns];
+            for (int i = 0; i < minimumsize; i++) {
+                newarr[i] = arr[i];
             }
+            deleteArray();
+            reserved_size = ns;
+            real_size = ns;
+            arr = newarr;
+
             return true;
         }
 
@@ -95,4 +98,4 @@ namespace sbl {
 
 }
 
-#endif // ! H_VECTOR
+#endif // ! H_SBL_VECTOR
