@@ -30,7 +30,7 @@ namespace sbl {
     	}
     }
 
-    int& UpperTriangularMatrix::operator() (unsigned int x, unsigned int y) {
+    number_type& UpperTriangularMatrix::operator() (unsigned int x, unsigned int y) {
     	int index = this->calculateVectorPosition(x, y);
     	if (index >= 0 && index < data.size()) {
     		return this->data[index];
@@ -39,7 +39,7 @@ namespace sbl {
     	}
     }
 
-    const int& UpperTriangularMatrix::operator() (unsigned int x, unsigned int y) const {
+    const number_type& UpperTriangularMatrix::operator() (unsigned int x, unsigned int y) const {
     	int index = this->calculateVectorPosition(x, y);
     	if (index >= 0 && index < data.size()) {
     		return this->data[index];
@@ -48,11 +48,11 @@ namespace sbl {
     	}
     }
 
-    int numDigits(int number) {
+    int numDigits(number_type number) {
     	int digits = 0;
         if (number == 0) return 1;
     	if (number < 0) number *= -1;
-    	while (number) {
+    	while (0 < number) {
     		number /= 10;
     		digits++;
     	}
@@ -60,9 +60,9 @@ namespace sbl {
     }
 
     std::ostream& operator << (std::ostream& out, const UpperTriangularMatrix& mx) {
-    	int max = mx.data[0];
+    	number_type max = mx.data[0];
     	for (int i = 0; i < mx.data.size(); i++) {
-    		if (mx.data[i] > max) {
+    		if (max < mx.data[i]) {
     			max = mx.data[i];
     		}
     	}

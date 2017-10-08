@@ -25,7 +25,7 @@ namespace sbl {
 
     void InfInt::convertFrom(int in) {
     	num.clear();
-    	num.reserve(30);
+    	//num.reserve(30);
     	negative = in < 0;
     	if (negative) {
     		in = -in;

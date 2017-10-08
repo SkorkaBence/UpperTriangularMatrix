@@ -6,6 +6,7 @@
 
 #include "Storage/Vector.h"
 #include "Matrix/UpperTriangularMatrix.h"
+#include "Numbers/InfInt.h"
 
 #include "Catch/catch.hpp"
 
@@ -25,6 +26,62 @@ TEST_CASE("Vector resize", "[vector]") {
     v.resize(15);
 
     REQUIRE( v.size() == 15 );
+}
+
+TEST_CASE("Vector push", "[vector]") {
+    sbl::vector<int> v;
+
+    for (int i = 0; i < 15; i++) {
+        v.push_back(i);
+    }
+
+    for (int i = 0; i < 15; i++) {
+        REQUIRE( v[i] == i );
+    }
+}
+
+TEST_CASE("Vector pop", "[vector]") {
+    sbl::vector<int> v;
+
+    for (int i = 0; i < 15; i++) {
+        v.push_back(i);
+    }
+
+    for (int i = 0; i < 5; i++) {
+        v.pop_back();
+    }
+
+    for (int i = 0; i < 15; i++) {
+        if (i < 10) {
+            REQUIRE( v[i] == i );
+        } else {
+            REQUIRE_THROWS( v[i] );
+        }
+    }
+}
+
+TEST_CASE("Vector resize with data", "[vector]") {
+    sbl::vector<int> v;
+
+    for (int i = 0; i < 15; i++) {
+        v.push_back(i);
+    }
+
+    v.resize(20);
+
+    for (int i = 0; i < 15; i++) {
+        REQUIRE( v[i] == i );
+    }
+
+    v.resize(10);
+
+    for (int i = 0; i < 15; i++) {
+        if (i < 10) {
+            REQUIRE( v[i] == i );
+        } else {
+            REQUIRE_THROWS( v[i] );
+        }
+    }
 }
 
 TEST_CASE("Matrix creation", "[matrix]") {
@@ -93,7 +150,7 @@ TEST_CASE("Matrix addition", "[matrix]") {
     // precheck
     for (int x = 0; x < 4; x++) {
         for (int y = 0; y <= x; y++) {
-            int temp;
+            number_type temp;
 
             REQUIRE_NOTHROW( temp = m1(x, y) );
             REQUIRE( temp == y + 1 );
@@ -109,7 +166,7 @@ TEST_CASE("Matrix addition", "[matrix]") {
     // reusult
     for (int x = 0; x < 4; x++) {
         for (int y = 0; y <= x; y++) {
-            int temp;
+            number_type temp;
             REQUIRE_NOTHROW( temp = res(x, y) );
             REQUIRE( temp == x + y + 2 );
         }
@@ -134,7 +191,7 @@ TEST_CASE("Matrix multiplication", "[matrix]") {
     // precheck
     for (int x = 0; x < 4; x++) {
         for (int y = 0; y <= x; y++) {
-            int temp;
+            number_type temp;
 
             REQUIRE_NOTHROW( temp = m1(x, y) );
             REQUIRE( temp == y + 1 );
@@ -150,10 +207,31 @@ TEST_CASE("Matrix multiplication", "[matrix]") {
     // reusult
     for (int x = 0; x < 4; x++) {
         for (int y = 0; y <= x; y++) {
-            int temp1, temp2;
+            number_type temp1, temp2;
             REQUIRE_NOTHROW( temp1 = res(x, y) );
             REQUIRE_NOTHROW( temp2 = correctmult(x, y) );
             REQUIRE( temp1 == temp2 );
         }
     }
+}
+
+TEST_CASE("Number creation", "[infint]") {
+    sbl::InfInt a = 8;
+    REQUIRE( a == 8 );
+}
+
+TEST_CASE("2^100", "[infint]") {
+    sbl::InfInt a = 1;
+    for (int i = 0; i < 100; i++) {
+        a = a * 2;
+    }
+    REQUIRE( a.toString() == "1267650600228229401496703205376");
+}
+
+TEST_CASE("3^1463", "[infint]") {
+    sbl::InfInt a = 1;
+    for (int i = 0; i < 1463; i++) {
+        a = a * 3;
+    }
+    REQUIRE( a.toString() == "106756826398240832148635272185668669030096504887041790681067437553363321772977659234912243264833262986252720759608094680223602219338961352336960404406055077895400358354829200160259745623821286893741267010602665280878788879625238057367634011087065210980709448690052197724024462927350474862592766436691381141201627014093099563717968387989970779405326771329333797942356107730632585912102871653297052335845812531222580422300265415071105694799379652537456496050758098230591493506106891568612860737751639389393860390941229226037276972234886152346101466408648260401951152130909718404756933237555681414314793318295386817501519488964584813574084737830969525992721401152146515636990027866764868627705872212427");
 }

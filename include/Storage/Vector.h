@@ -29,6 +29,17 @@ namespace sbl {
             reserved_size = 0;
         }
 
+        vector(const vector<T>& copythis) {
+            arr = nullptr;
+            real_size = 0;
+            reserved_size = 0;
+
+            this->resize(copythis.size());
+            for (int i = 0; i < copythis.size(); i++) {
+                arr[i] = copythis.arr[i];
+            }
+        }
+
         bool clear() {
             deleteArray();
 
@@ -55,6 +66,7 @@ namespace sbl {
         bool pop_back() {
             if (real_size == 1) {
                 clear();
+                return true;
             } else if (real_size > 0) {
                 real_size--;
                 return true;
@@ -63,13 +75,16 @@ namespace sbl {
         }
 
         bool resize(unsigned int ns) {
-            int minimumsize = ns > real_size ? real_size : ns;
-
             T* newarr = new T[ns];
-            for (int i = 0; i < minimumsize; i++) {
-                newarr[i] = arr[i];
+
+            if (real_size > 0) {
+                int minimumsize = ns > real_size ? real_size : ns;
+                for (int i = 0; i < minimumsize; i++) {
+                    newarr[i] = arr[i];
+                }
+                deleteArray();
             }
-            deleteArray();
+            
             reserved_size = ns;
             real_size = ns;
             arr = newarr;
@@ -109,6 +124,14 @@ namespace sbl {
 
         unsigned int size() const {
             return real_size;
+        }
+
+        friend std::ostream& operator << (std::ostream& out, vector<T> vect) {
+            out << "{" << vect.size();
+            for (int i = 0; i < vect.size(); i++) {
+                out << ", " << (int)vect[i];
+            }
+            out << "}";
         }
     };
 
