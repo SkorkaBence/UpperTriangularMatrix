@@ -1,10 +1,9 @@
 #ifndef H_SBL_INFNT
 #define H_SBL_INFNT
 
-#include <vector>
 #include <iostream>
 #include <stdint.h>
-#include "FakeDynamicArray.h"
+#include "Storage/Vector.h"
 
 typedef uint8_t infint_vector_number;
 typedef sbl::vector<infint_vector_number> infint_vector;

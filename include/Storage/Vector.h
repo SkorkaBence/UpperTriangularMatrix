@@ -77,6 +77,22 @@ namespace sbl {
             return true;
         }
 
+        bool reserve(unsigned int ns) {
+            if (ns < reserved_size) {
+                return true;
+            }
+
+            T* newarr = new T[ns];
+            for (int i = 0; i < reserved_size; i++) {
+                newarr[i] = arr[i];
+            }
+            deleteArray();
+            reserved_size = ns;
+            arr = newarr;
+
+            return true;
+        }
+
         T& operator [] (unsigned int index) {
             if (index >= real_size) {
                 throw VectorException("Invalid index");

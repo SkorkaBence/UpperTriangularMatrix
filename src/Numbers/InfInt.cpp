@@ -1,6 +1,6 @@
-#include "InfInt.h"
+#include "Numbers/InfInt.h"
 
-#include "InfIntException.h"
+#include "Numbers/InfIntException.h"
 #include <sstream>
 #include <string>
 
