@@ -2,7 +2,6 @@
 #define H_SBL_INFNT
 
 #include <iostream>
-#include <vector>
 #include <stdint.h>
 #include "Storage/Vector.h"
 

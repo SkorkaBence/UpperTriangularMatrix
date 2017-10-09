@@ -1,19 +1,13 @@
 #include <iostream>
 #include <fstream>
 
-#define RUN_TESTS
+//#define RUN_TESTS
 
 #ifdef RUN_TESTS
 #include "tests.h"
 #else
 
 #include "Matrix/UpperTriangularMatrix.h"
-
-#ifdef _WIN32
-#define DIRECTORY_SEPARATOR_CHARACTER '\\'
-#else
-#define DIRECTORY_SEPARATOR_CHARACTER '/'
-#endif
 
 #define print(x) std::cout << x
 #define println(x) std::cout << x << std::endl
@@ -65,20 +59,12 @@ int main() {
                 matrix *= num;
                 break;
             case 5: // add a matrix
-                m2 = matrix;
                 loadMatrix(m2);
-                println(matrix);
-                println(m2);
                 matrix = matrix + m2;
-                println(matrix);
                 break;
             case 6: // multiply with a matrix
-                m2 = matrix;
                 loadMatrix(m2);
-                println(matrix);
-                println(m2);
                 matrix = matrix * m2;
-                println(matrix);
                 break;
             case 0: // exit
                 stoploop = true;
@@ -88,6 +74,7 @@ int main() {
 }
 
 void loadMatrix(sbl::UpperTriangularMatrix& matrix) {
+    println("-=-=-= Betoltes =-=-=-");
     println("1 - Betoltes consolerol");
     println("2 - Betoltes filebol");
     println("0 - megsem");
@@ -112,6 +99,7 @@ void loadMatrix(sbl::UpperTriangularMatrix& matrix) {
 }
 
 void saveMatrix(sbl::UpperTriangularMatrix& matrix) {
+    println("-=-=-= Mentes =-=-=-");
     println("Filenev?");
     std::string filename;
     read(filename);
