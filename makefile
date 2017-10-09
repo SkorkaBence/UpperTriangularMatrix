@@ -4,7 +4,7 @@ TEMPDIR = temp
 CXX     = g++
 CFLAGS  = -I$(IDIR) -std=c++11
 LDFLAGS = -I$(IDIR) -std=c++11
-FILES   = main.cpp Matrix/MatrixException.cpp Matrix/UpperTriangularMatrix.cpp Storage/Vector.cpp Storage/VectorException.cpp Numbers/InfInt.cpp Numbers/InfIntException.cpp
+FILES   = main.cpp Matrix/MatrixException.cpp Matrix/UpperTriangularMatrix.cpp Storage/Vector.cpp Storage/VectorException.cpp
 TARGET  = run
 SOURCES = $(patsubst %,$(SRC)/%,$(FILES))
 OBJECTS = $(patsubst %.cpp,$(TEMPDIR)/%.o,$(FILES))
