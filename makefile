@@ -11,12 +11,12 @@ OBJECTS = $(patsubst %.cpp,$(TEMPDIR)/%.o,$(FILES))
 DEPS    = $(patsubst %.cpp,$(TEMPDIR)/%.d,$(FILES))
 
 $(TEMPDIR)/%.o: $(SRC)/%.cpp
-	$(CXX) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CFLAGS) -c $< -O3 -o $@
 
-$(TEMPDIR)/%.d: $(SRC)/%.cpp
-	$(CXX) $(CFLAGS) -MM -MT $< -MF $@
+#$(TEMPDIR)/%.d: $(SRC)/%.cpp
+#	$(CXX) $(CFLAGS) -MM -MT $< -MF $@
 
 -include $(DEPS)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) $(LDFLAGS) $(OBJECTS) -o $(TARGET)
+	$(CXX) $(LDFLAGS) $(OBJECTS) -O3 -o $(TARGET)

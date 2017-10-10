@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-//#define RUN_TESTS
+#define RUN_TESTS
 
 #ifdef RUN_TESTS
 #include "tests.h"
