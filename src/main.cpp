@@ -84,6 +84,7 @@ void loadMatrix(sbl::UpperTriangularMatrix& matrix) {
 
     switch (r) {
         case 1:
+            println("Formatum: [meret] {ertek} {ertek} ...");
             matrix.readData(std::cin);
             break;
         case 2:
