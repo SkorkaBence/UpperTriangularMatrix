@@ -39,12 +39,12 @@ namespace sbl {
     	}
     }
 
-    const number_type& UpperTriangularMatrix::operator() (unsigned int x, unsigned int y) const {
+    number_type UpperTriangularMatrix::operator() (unsigned int x, unsigned int y) const {
     	int index = this->calculateVectorPosition(x, y);
     	if (index >= 0 && index < data.size()) {
     		return this->data[index];
     	} else {
-    		throw MatrixException("Invalid positions");
+    		return 0;
     	}
     }
 

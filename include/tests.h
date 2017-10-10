@@ -101,7 +101,7 @@ TEST_CASE("Accessing valid matrix positions", "[matrix]") {
     }
 }
 
-TEST_CASE("Accessing invvalid matrix positions", "[matrix]") {
+TEST_CASE("Accessing invalid matrix positions", "[matrix]") {
     sbl::UpperTriangularMatrix m(15);
 
     for (int x = 0; x < 15; x++) {

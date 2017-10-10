@@ -25,7 +25,7 @@ namespace sbl {
     	~UpperTriangularMatrix();
 
     	number_type& operator () (unsigned int x, unsigned int y);
-        const number_type& operator () (unsigned int x, unsigned int y) const;
+        number_type operator () (unsigned int x, unsigned int y) const;
     	UpperTriangularMatrix& operator += (const UpperTriangularMatrix& addthis);
     	UpperTriangularMatrix operator + (const UpperTriangularMatrix& addthis) const;
     	UpperTriangularMatrix& operator *= (const number_type& mult);
